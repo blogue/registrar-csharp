@@ -222,7 +222,6 @@ namespace Registrar.Objects
       {
         conn.Close();
       }
-
     }
 
     public List<Student> GetStudents()
@@ -246,7 +245,8 @@ namespace Registrar.Objects
         int thisStudentId = rdr.GetInt32(0);
         string studentName = rdr.GetString(1);
         DateTime? studentenrollmentDate = rdr.GetDateTime(2);
-        Student foundStudent = new Student(studentName, studentenrollmentDate, thisStudentId);
+        int studentDepartmentId = rdr.GetInt32(3);
+        Student foundStudent = new Student(studentName, studentenrollmentDate, studentDepartmentId, thisStudentId);
         students.Add(foundStudent);
       }
       if (rdr != null)

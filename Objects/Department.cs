@@ -189,7 +189,43 @@ namespace Registrar.Objects
         conn.Close();
       }
       return courses;
+    }
 
+    public List<Student> GetStudents()
+    {
+      SqlConnection conn = DB.Connection();
+      SqlDataReader rdr = null;
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("SELECT *  FROM students WHERE department_id = @DepartmentId;", conn);
+
+      SqlParameter departmentParameter = new SqlParameter();
+      departmentParameter.ParameterName = "@DepartmentId";
+      departmentParameter.Value = _id;
+      cmd.Parameters.Add(departmentParameter);
+
+      rdr = cmd.ExecuteReader();
+      List<Student> students = new List<Student>{};
+
+      while(rdr.Read())
+      {
+        int thisStudentId = rdr.GetInt32(0);
+        string studentName = rdr.GetString(1);
+        DateTime? studentenrollmentDate = rdr.GetDateTime(2);
+        int studentDepartmentId = rdr.GetInt32(3);
+        Student foundStudent = new Student(studentName, studentenrollmentDate, studentDepartmentId, thisStudentId);
+        students.Add(foundStudent);
+      }
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+
+      if (conn != null)
+      {
+        conn.Close();
+      }
+      return students;
     }
 
   }

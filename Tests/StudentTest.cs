@@ -34,8 +34,8 @@ namespace Registrar.Objects
     public void Student_Equals_SameStudents()
     {
       //Arrange, Act
-      Student firstStudent = new Student("Aaron", date);
-      Student secondStudent = new Student("Aaron", date);
+      Student firstStudent = new Student("Aaron", date, 1);
+      Student secondStudent = new Student("Aaron", date, 1);
       //Assert
       Assert.Equal(firstStudent, secondStudent);
     }
@@ -44,7 +44,7 @@ namespace Registrar.Objects
     public void Student_Save_SavesToDatabase()
     {
       //Arrange
-      Student testStudent = new Student("Aaron", date);
+      Student testStudent = new Student("Aaron", date, 1);
       //Act
       testStudent.Save();
       Student savedStudent = Student.GetAll()[0];
@@ -56,7 +56,7 @@ namespace Registrar.Objects
     public void Student_Delete_DeletesFromDatabase()
     {
       //Arrange
-      Student testStudent = new Student("Aaron", date);
+      Student testStudent = new Student("Aaron", date, 1);
       testStudent.Save();
       //Act
       testStudent.Delete();
@@ -68,7 +68,7 @@ namespace Registrar.Objects
     public void Student_FindStudentInDatabase()
     {
       //Arrange
-      Student testStudent = new Student("Aaron", date);
+      Student testStudent = new Student("Aaron", date, 1);
       testStudent.Save();
       //Act
       Student foundStudent = Student.Find(testStudent.GetId());
@@ -80,7 +80,7 @@ namespace Registrar.Objects
     public void Student_GetCoursesByStudent()
     {
       //Arrange
-      Student testStudent = new Student("Aaron", date);
+      Student testStudent = new Student("Aaron", date, 1);
       testStudent.Save();
       Course testCourse = new Course("History", 101, 1);
       testCourse.Save();
@@ -88,6 +88,23 @@ namespace Registrar.Objects
       //Act
       testStudent.AddCourse(testCourse);
       List<Course> result = testStudent.GetCourses();
+      //Assert
+      Assert.Equal(expectedResult, result);
+    }
+
+    [Fact]
+    public void Student_GetAvailableCoursesByStudent()
+    {
+      //Arrange
+      Student testStudent = new Student("Aaron", date, 1);
+      testStudent.Save();
+      Course firstCourse = new Course("History", 101, 1);
+      firstCourse.Save();
+      Course secondCourse = new Course("Math", 101, 2);
+      secondCourse.Save();
+      List<Course> expectedResult = new List<Course>{firstCourse, secondCourse};
+      //Act
+      List<Course> result = testStudent.GetAvailableCourses();
       //Assert
       Assert.Equal(expectedResult, result);
     }

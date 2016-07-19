@@ -15,11 +15,15 @@ namespace Registrar
         List<Student> allStudents = Student.GetAll();
         return View["students.cshtml", allStudents];
       };
-      Get["/students/add"] = _ => View["add_student.cshtml"];
+      Get["/students/add"] = _ =>
+      {
+        List<Department> allDepartments = Department.GetAll();
+        return View["add_student.cshtml", allDepartments];
+      };
 
       Post["/students/add"] = _ =>
       {
-        Student newStudent = new Student(Request.Form["name"], Request.Form["date"]);
+        Student newStudent = new Student(Request.Form["name"], Request.Form["date"], Request.Form["major"]);
         newStudent.Save();
         List<Student> allStudents = Student.GetAll();
         return View["students.cshtml", allStudents];
@@ -61,8 +65,8 @@ namespace Registrar
         Dictionary<string, object> model = new Dictionary<string, object>{};
         Student student = Student.Find(parameters.id);
         model.Add("student", student);
-        List<Course> allCourses = Course.GetAll();
-        model.Add("courses", allCourses);
+        List<Course> courses = student.GetAvailableCourses();
+        model.Add("courses", courses);
         return View["enroll.cshtml", model];
       };
 
@@ -81,6 +85,13 @@ namespace Registrar
       Delete["/courses/delete"] = _ =>
       {
         Course.DeleteAll();
+        return View["index.cshtml"];
+      };
+
+      Delete["/delete"] = _ =>
+      {
+        Course.DeleteAll();
+        Student.DeleteAll();
         return View["index.cshtml"];
       };
 

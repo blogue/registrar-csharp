@@ -11,6 +11,13 @@
       <input type="text" name="name" value="" required>
       <label>Enrollment Date: </label>
       <input type="date" name="date" value="" required>
+      <label for="major">Major</label>
+      <select name="major">
+        @foreach(var department in Model)
+        {
+          <option value=@department.GetId()>@department.GetName()</option>
+        }
+      </select>
       <button type="submit" name="button">Submit</button>
     </form>
     <a href="/students"><button type="button" name="button">View Students</button></a>

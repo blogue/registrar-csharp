@@ -92,5 +92,20 @@ namespace Registrar.Objects
       //Assert
       Assert.Equal(expectedResult, result);
     }
+    
+    [Fact]
+    public void Course_FindStudentByDepartment()
+    {
+      //Arrange
+      Department testDepartment = new Department("History");
+      testDepartment.Save();
+      Student testStudent = new Student("Aaron", date, testDepartment.GetId());
+      List<Student> expectedResult = new List<Student>{testStudent};
+      testStudent.Save();
+      //Act
+      List<Student> result = testDepartment.GetStudents();
+      //Assert
+      Assert.Equal(expectedResult, result);
+    }
   }
 }

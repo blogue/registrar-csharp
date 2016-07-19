@@ -79,7 +79,7 @@ namespace Registrar.Objects
     public void Course_FindStudentByCourse()
     {
       //Arrange
-      Student testStudent = new Student("Aaron", date);
+      Student testStudent = new Student("Aaron", date, 1);
       Course testCourse = new Course("History", 101, 1);
       List<Student> expectedResult = new List<Student>{testStudent};
       testStudent.Save();
