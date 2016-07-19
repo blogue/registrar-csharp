@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Enroll</title>
+  </head>
+  <body>
+    <h3>@Model["student"].GetName() - Enroll</h3>
+    <form action='/students/@Model["student"].GetId()/enroll' method="post">
+      <input type="hidden" name="_method" value="PATCH">
+      <select name="course">
+        @foreach(var course in Model["courses"])
+        {
+          <option value="@course.GetId()">@course.GetName()</option>
+        }
+      </select>
+      <button type="submit" name="button">Enroll</button>
+    </form>
+  </body>
+</html>

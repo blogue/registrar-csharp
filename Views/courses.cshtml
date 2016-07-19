@@ -5,9 +5,16 @@
     <title></title>
   </head>
   <body>
-    <h1>Registrar</h1>
+    <h1>Courses</h1>
+
+    <ul>
+      @foreach(var course in Model)
+      {
+        <a href="/courses/@course.GetId()"><li>@course.GetName()</li></a>
+      }
+    </ul>
+
     <a href="/students"><button type="button" name="button">View Students</button></a>
-    <a href="/courses"><button type="button" name="button">View Courses</button></a>
     <a href="/students/add"><button type="button" name="button">Add Student</button></a>
     <a href="/courses/add"><button type="button" name="button">Add Course</button></a>
   </body>

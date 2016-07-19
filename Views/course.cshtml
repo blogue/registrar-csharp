@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>@Model.GetName()</title>
+  </head>
+  <body>
+    <p>
+      Students enrolled in @Model.GetName() - @Model.GetCourseNumber()
+    </p>
+    <ul>
+    @foreach(var student in Model.GetStudents())
+    {
+      <li><a href="/student/@student.GetId()">@student.GetName()</a></li>
+    }
+  </ul>
+  <a href="/"><button type="button" name="button">Home</button></a>
+  <a href="/students"><button type="button" name="button">View Students</button></a>
+  <a href="/courses"><button type="button" name="button">View Courses</button></a>
+  </body>
+</html>

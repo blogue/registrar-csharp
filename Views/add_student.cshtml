@@ -5,10 +5,16 @@
     <title></title>
   </head>
   <body>
-    <h1>Registrar</h1>
+
+    <form action="/students/add" method="post">
+      <label>Student Name: </label>
+      <input type="text" name="name" value="" required>
+      <label>Enrollment Date: </label>
+      <input type="date" name="date" value="" required>
+      <button type="submit" name="button">Submit</button>
+    </form>
     <a href="/students"><button type="button" name="button">View Students</button></a>
     <a href="/courses"><button type="button" name="button">View Courses</button></a>
-    <a href="/students/add"><button type="button" name="button">Add Student</button></a>
     <a href="/courses/add"><button type="button" name="button">Add Course</button></a>
   </body>
 </html>
