@@ -226,7 +226,8 @@ namespace Registrar.Objects
         int courseId = rdr.GetInt32(0);
         string courseName = rdr.GetString(1);
         int courseNumber = rdr.GetInt32(2);
-        Course foundCourse = new Course(courseName, courseNumber, courseId);
+        int courseDepartment = rdr.GetInt32(3);
+        Course foundCourse = new Course(courseName, courseNumber, courseDepartment, courseId);
         courses.Add(foundCourse);
       }
       if (rdr != null)

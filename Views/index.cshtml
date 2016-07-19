@@ -10,5 +10,9 @@
     <a href="/courses"><button type="button" name="button">View Courses</button></a>
     <a href="/students/add"><button type="button" name="button">Add Student</button></a>
     <a href="/courses/add"><button type="button" name="button">Add Course</button></a>
+    <form action="/courses/delete" method="post">
+      <input type="hidden" name="_method" value="DELETE">
+      <button type="submit" name="button">Delete All Courses</button>
+    </form>
   </body>
 </html>

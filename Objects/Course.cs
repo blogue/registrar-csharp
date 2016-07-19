@@ -9,12 +9,14 @@ namespace Registrar.Objects
     private int _id;
     private int _courseNumber;
     private string _name;
+    private int _departmentId;
 
-    public Course(string courseName, int courseNumber, int id=0)
+    public Course(string courseName, int courseNumber, int departmentId, int id=0)
     {
       _id = id;
       _courseNumber = courseNumber;
       _name = courseName;
+      _departmentId = departmentId;
     }
 
     public void SetCourseNumber(int newCourseNumber)
@@ -37,6 +39,10 @@ namespace Registrar.Objects
     {
       return _id;
     }
+    public int GetDepartmentId()
+    {
+      return _departmentId;
+    }
 
     public override bool Equals(System.Object otherCourse)
     {
@@ -50,7 +56,8 @@ namespace Registrar.Objects
         bool idEquality = this.GetId() == newCourse.GetId();
         bool nameEquality = this.GetName() == newCourse.GetName();
         bool courseNumberEquality = this.GetCourseNumber() == newCourse.GetCourseNumber();
-        return (idEquality && nameEquality && courseNumberEquality);
+        bool departmentIdEquality = this.GetDepartmentId() == newCourse.GetDepartmentId();
+        return (idEquality && nameEquality && courseNumberEquality && departmentIdEquality);
       }
     }
 
@@ -97,7 +104,8 @@ namespace Registrar.Objects
         int courseId = rdr.GetInt32(0);
         string courseName = rdr.GetString(1);
         int courseNumber = rdr.GetInt32(2);
-        Course newCourse = new Course(courseName, courseNumber, courseId);
+        int departmentId = rdr.GetInt32(3);
+        Course newCourse = new Course(courseName, courseNumber, departmentId, courseId);
         allCourses.Add(newCourse);
       }
 
@@ -119,7 +127,7 @@ namespace Registrar.Objects
       SqlDataReader rdr;
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("INSERT INTO courses (name, course_number) OUTPUT INSERTED.id VALUES (@CourseName, @CourseNumber);", conn);
+      SqlCommand cmd = new SqlCommand("INSERT INTO courses (name, course_number, department_id) OUTPUT INSERTED.id VALUES (@CourseName, @CourseNumber, @DepartmentId);", conn);
 
       SqlParameter nameParameter = new SqlParameter();
       nameParameter.ParameterName = "@CourseName";
@@ -130,6 +138,12 @@ namespace Registrar.Objects
       courseNumberParameter.ParameterName = "@CourseNumber";
       courseNumberParameter.Value = this.GetCourseNumber();
       cmd.Parameters.Add(courseNumberParameter);
+
+      SqlParameter departmentIdParameter = new SqlParameter();
+      departmentIdParameter.ParameterName = "@DepartmentId";
+      departmentIdParameter.Value = this.GetDepartmentId();
+      cmd.Parameters.Add(departmentIdParameter);
+
       rdr = cmd.ExecuteReader();
 
       while(rdr.Read())
@@ -163,14 +177,16 @@ namespace Registrar.Objects
       int foundCourseId = 0;
       string foundCourseName = null;
       int foundCourseNumber = 0;
+      int foundDepartmentId = 0;
 
       while(rdr.Read())
       {
         foundCourseId = rdr.GetInt32(0);
         foundCourseName = rdr.GetString(1);
         foundCourseNumber = rdr.GetInt32(2);
+        foundDepartmentId = rdr.GetInt32(3);
       }
-      Course foundCourse = new Course(foundCourseName, foundCourseNumber, foundCourseId);
+      Course foundCourse = new Course(foundCourseName, foundCourseNumber, foundDepartmentId, foundCourseId);
 
       if (rdr != null)
       {
@@ -227,11 +243,11 @@ namespace Registrar.Objects
 
       while(rdr.Read())
       {
-            int thisStudentId = rdr.GetInt32(0);
-            string studentName = rdr.GetString(1);
-            DateTime? studentenrollmentDate = rdr.GetDateTime(2);
-            Student foundStudent = new Student(studentName, studentenrollmentDate, thisStudentId);
-            students.Add(foundStudent);
+        int thisStudentId = rdr.GetInt32(0);
+        string studentName = rdr.GetString(1);
+        DateTime? studentenrollmentDate = rdr.GetDateTime(2);
+        Student foundStudent = new Student(studentName, studentenrollmentDate, thisStudentId);
+        students.Add(foundStudent);
       }
       if (rdr != null)
       {

@@ -31,11 +31,14 @@ namespace Registrar
         return View["courses.cshtml", allCourses];
       };
 
-      Get["/courses/add"] = _ => View["add_course.cshtml"];
+      Get["/courses/add"] = _ => {
+        List<Department> allDepartments = Department.GetAll();
+        return View["add_course.cshtml", allDepartments];
+      };
 
       Post["/courses/add"] = _ =>
       {
-        Course newCourse = new Course(Request.Form["name"], Request.Form["number"]);
+        Course newCourse = new Course(Request.Form["name"], Request.Form["number"], Request.Form["department"]);
         newCourse.Save();
         List<Course> allCourses = Course.GetAll();
         return View["courses.cshtml", allCourses];
@@ -73,6 +76,12 @@ namespace Registrar
         List<Course> allCourses = Course.GetAll();
         model.Add("courses", allCourses);
         return View["enroll.cshtml", model];
+      };
+
+      Delete["/courses/delete"] = _ =>
+      {
+        Course.DeleteAll();
+        return View["index.cshtml"];
       };
 
     }

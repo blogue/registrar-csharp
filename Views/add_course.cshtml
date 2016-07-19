@@ -10,6 +10,13 @@
       <input type="text" name="name" value="" required>
       <label>Course Number: </label>
       <input type="number" name="number" value="" required>
+      <label for="department">Department</label>
+      <select name="department">
+        @foreach(var department in @Model)
+        {
+          <option value="@department.GetId()">@department.GetName()</option>
+        }
+      </select>
       <button type="submit" name="button">Submit</button>
     </form>
     <a href="/students"><button type="button" name="button">View Students</button></a>

@@ -34,8 +34,8 @@ namespace Registrar.Objects
     public void Course_Equals_SameCourses()
     {
       //Arrange, Act
-      Course firstCourse = new Course("History", 1535);
-      Course secondCourse = new Course("History", 1535);
+      Course firstCourse = new Course("History", 1535, 1);
+      Course secondCourse = new Course("History", 1535, 1);
       //Assert
       Assert.Equal(firstCourse, secondCourse);
     }
@@ -44,7 +44,7 @@ namespace Registrar.Objects
     public void Course_Save_SavesToDatabase()
     {
       //Arrange
-      Course testCourse = new Course("History", 404);
+      Course testCourse = new Course("History", 404, 1);
       //Act
       testCourse.Save();
       Course savedCourse = Course.GetAll()[0];
@@ -56,7 +56,7 @@ namespace Registrar.Objects
     public void Course_Delete_DeletesFromDatabase()
     {
       //Arrange
-      Course testCourse = new Course("History", 101);
+      Course testCourse = new Course("History", 101, 1);
       testCourse.Save();
       //Act
       testCourse.Delete();
@@ -68,7 +68,7 @@ namespace Registrar.Objects
     public void Course_FindCourseInDatabase()
     {
       //Arrange
-      Course testCourse = new Course("History", 101);
+      Course testCourse = new Course("History", 101, 1);
       testCourse.Save();
       //Act
       Course foundCourse = Course.Find(testCourse.GetId());
@@ -80,7 +80,7 @@ namespace Registrar.Objects
     {
       //Arrange
       Student testStudent = new Student("Aaron", date);
-      Course testCourse = new Course("History", 101);
+      Course testCourse = new Course("History", 101, 1);
       List<Student> expectedResult = new List<Student>{testStudent};
       testStudent.Save();
       testCourse.Save();

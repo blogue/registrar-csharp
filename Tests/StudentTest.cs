@@ -82,7 +82,7 @@ namespace Registrar.Objects
       //Arrange
       Student testStudent = new Student("Aaron", date);
       testStudent.Save();
-      Course testCourse = new Course("History", 101);
+      Course testCourse = new Course("History", 101, 1);
       testCourse.Save();
       List<Course> expectedResult = new List<Course>{testCourse};
       //Act
